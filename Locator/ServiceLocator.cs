@@ -155,13 +155,18 @@ namespace EcoMine.ServiceLocator
             var type = typeof(T);
             var scene = monoBehaviour.gameObject.scene;
 
-            if (!_globalServices.TryGetValue(type, out var service) || (!_localServices.ContainsKey(scene) && !_localServices[scene].TryGetValue(type, out service)))
+            if (_globalServices.TryGetValue(type, out var service))
             {
-                Debug.LogError($"Service of type {type} is not registered.");
-                return null;
+                return service as T;
             }
 
-            return service as T;
+            if (_localServices.ContainsKey(scene) && _localServices[scene].TryGetValue(type, out service))
+            {
+                return service as T;
+            }
+            
+            Debug.LogError($"Service of type {type} is not registered.");
+            return null;
         }
 
         /// <summary>
