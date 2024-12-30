@@ -5,7 +5,7 @@ namespace EcoMine.ServiceLocator
 {
     internal sealed class ServiceLocatorRuntime
     {
-        public delegate void SceneLoadedEvent(Scene scene, LoadSceneMode loadSceneMode);
+        public delegate void SceneLoadedEvent(Scene scene);
         public delegate void SceneUnLoadedEvent(Scene scene);
         
         public SceneLoadedEvent OnSceneLoadedHandler;
@@ -13,20 +13,19 @@ namespace EcoMine.ServiceLocator
         
         public void Initialized()
         {
-            SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
-            OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
             InitializedUnityEditor();
             Debug.Log("Service Locator Runtime Initialized.");
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void OnSceneLoaded()
         {
             ServiceFilter serviceFilter = new ServiceFilter();
             serviceFilter.Filter().ForEach(service => service.RegisterService());
             serviceFilter.Dispose();
             
-            OnSceneLoadedHandler?.Invoke(scene, loadSceneMode);
+            ServiceLocator.ServiceLocatorRuntime.OnSceneLoadedHandler?.Invoke(SceneManager.GetActiveScene());
         }
 
         private void OnSceneUnloaded(Scene scene)
@@ -49,9 +48,6 @@ namespace EcoMine.ServiceLocator
                 ServiceLocator.UnregisterAllService();
                 UnityEditor.EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
             }
-            
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            SceneManager.sceneUnloaded -= OnSceneUnloaded;
         }
 #endif
     }

@@ -26,7 +26,7 @@ namespace EcoMine.ServiceLocator
         /// <summary>
         /// Initialize Service Locator.
         /// </summary>
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         private static void Initialize()
         {
             ServiceLocatorRuntime = new ServiceLocatorRuntime();

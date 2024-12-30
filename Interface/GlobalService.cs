@@ -7,7 +7,16 @@ namespace EcoMine.ServiceLocator
     {
         void IService.RegisterService()
         {
-            ServiceLocator.RegisterGlobalService(this, this as T);
+            if (ServiceLocator.IsRegistered<T>(this))
+            {
+                Destroy(this);
+                Debug.LogWarning($"Service of type {typeof(T)} is already registered as global service.");
+            }
+            else
+            {
+                DontDestroyOnLoad(this);
+                ServiceLocator.RegisterGlobalService(this, this as T);
+            }
         }
     }
 }
