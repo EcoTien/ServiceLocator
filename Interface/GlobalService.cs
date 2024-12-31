@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace EcoMine.ServiceLocator
+namespace EcoMine.Service
 {
     public abstract class GlobalService<T> : MonoBehaviour, IService where T : class, IService
     {
@@ -10,7 +10,6 @@ namespace EcoMine.ServiceLocator
             if (ServiceLocator.IsRegistered<T>(this))
             {
                 Destroy(this);
-                Debug.LogWarning($"Service of type {typeof(T)} is already registered as global service.");
             }
             else
             {

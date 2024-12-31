@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace EcoMine.ServiceLocator
+namespace EcoMine.Service
 {
     public abstract class LocalService<T> : MonoBehaviour, IService where T : class, IService
     {

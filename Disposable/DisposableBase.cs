@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EcoMine.ServiceLocator.Disposable
+namespace EcoMine.Service.Disposable
 {
     /// <summary>
     /// Disposable base class.

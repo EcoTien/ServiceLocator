@@ -1,54 +1,35 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace EcoMine.ServiceLocator
+namespace EcoMine.Service
 {
-    internal sealed class ServiceLocatorRuntime
+    [DefaultExecutionOrder(-1001)]
+    public sealed class ServiceLocatorRuntime : MonoBehaviour
     {
-        public delegate void SceneLoadedEvent(Scene scene);
-        public delegate void SceneUnLoadedEvent(Scene scene);
-        
-        public SceneLoadedEvent OnSceneLoadedHandler;
-        public SceneUnLoadedEvent OnSceneUnLoadedHandler;
-        
-        public void Initialized()
+        private Scene _scene;
+
+        private void Awake() => Initialized();
+
+        private void Initialized()
         {
-            SceneManager.sceneUnloaded += OnSceneUnloaded;
-            InitializedUnityEditor();
+            _scene = SceneManager.GetActiveScene();
+            EditorFilterService();
             Debug.Log("Service Locator Runtime Initialized.");
         }
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void OnSceneLoaded()
+        
+        private void EditorFilterService()
         {
+            /*#if UNITY_EDITOR*/
             ServiceFilter serviceFilter = new ServiceFilter();
             serviceFilter.Filter().ForEach(service => service.RegisterService());
             serviceFilter.Dispose();
-            
-            ServiceLocator.ServiceLocatorRuntime.OnSceneLoadedHandler?.Invoke(SceneManager.GetActiveScene());
+            /*#endif*/
         }
 
-        private void OnSceneUnloaded(Scene scene)
+        private void OnDestroy()
         {
-            ServiceLocator.UnregisterAllLocalService(scene);
-            OnSceneUnLoadedHandler?.Invoke(scene);
+            ServiceLocator.UnregisterAllLocalService(_scene);
         }
-        
-        private void InitializedUnityEditor()
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-#endif
-        }
-#if UNITY_EDITOR
-        private void OnPlayModeStateChanged(UnityEditor.PlayModeStateChange playModeStateChange)
-        {
-            if (playModeStateChange == UnityEditor.PlayModeStateChange.ExitingPlayMode)
-            {
-                ServiceLocator.UnregisterAllService();
-                UnityEditor.EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
-            }
-        }
-#endif
     }
 }

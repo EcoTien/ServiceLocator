@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace EcoMine.ServiceLocator
+namespace EcoMine.Service
 {
     public interface IService
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EcoMine.ServiceLocator.Disposable;
+using EcoMine.Service.Disposable;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace EcoMine.ServiceLocator
+namespace EcoMine.Service
 {
     internal sealed class ServiceFilter : DisposableBase
     {

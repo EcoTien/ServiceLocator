@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace EcoMine.ServiceLocator
+namespace EcoMine.Service
 {
-    internal static class ServiceLocator
+    public static class ServiceLocator
     {
         /// <summary>
         /// Global services are services that are shared across all scenes.
@@ -18,6 +17,7 @@ namespace EcoMine.ServiceLocator
         /// </summary>
         private static readonly Dictionary<Scene, Dictionary<Type, IService>> _localServices = new Dictionary<Scene, Dictionary<Type, IService>>();
         
+        /*
         /// <summary>
         /// Service Locator Runtime.
         /// </summary>
@@ -29,10 +29,9 @@ namespace EcoMine.ServiceLocator
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         private static void Initialize()
         {
-            ServiceLocatorRuntime = new ServiceLocatorRuntime();
-            ServiceLocatorRuntime.Initialized();
             Debug.Log("Service Locator Initialized.");
         }
+        */
 
         /// <summary>
         /// Reigster Global Service to Service Locator.
