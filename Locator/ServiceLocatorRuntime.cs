@@ -14,11 +14,11 @@ namespace EcoMine.Service
         private void Initialized()
         {
             _scene = SceneManager.GetActiveScene();
-            EditorFilterService();
+            FilterService();
             Debug.Log("Service Locator Runtime Initialized.");
         }
         
-        private void EditorFilterService()
+        private void FilterService()
         {
             /*#if UNITY_EDITOR*/
             ServiceFilter serviceFilter = new ServiceFilter();

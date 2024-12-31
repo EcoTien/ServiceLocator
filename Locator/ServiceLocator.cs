@@ -37,7 +37,7 @@ namespace EcoMine.Service
         /// Reigster Global Service to Service Locator.
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        /// <param name="monoBehaviour">Mono behaviour</param>
+        /// <param name="monoBehaviour"></param>
         /// <param name="service">IService</param>
         public static void RegisterGlobalService<T>(MonoBehaviour monoBehaviour, T service) where T : class, IService
         {
@@ -59,12 +59,12 @@ namespace EcoMine.Service
             _globalServices[type] = service;
             Debug.Log($"Service of type {type} registered successfully.");
         }
-        
+
         /// <summary>
         /// Reigster Local Service to Service Locator.
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        /// <param name="monoBehaviour">Mono behaviour</param>
+        /// <param name="monoBehaviour"></param>
         /// <param name="service">IService</param>
         public static void RegisterLocalService<T>(MonoBehaviour monoBehaviour, T service) where T : class, IService
         {
@@ -149,10 +149,11 @@ namespace EcoMine.Service
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <returns>Service</returns>
-        public static T GetService<T>(MonoBehaviour monoBehaviour) where T : class, IService
+        public static T GetService<T>(MonoBehaviour monoBehaviour = null) where T : class, IService
         {
             var type = typeof(T);
-            var scene = monoBehaviour.gameObject.scene;
+            var scene = SceneManager.GetActiveScene();
+            if(monoBehaviour != null) scene = monoBehaviour.gameObject.scene;
 
             if (_globalServices.TryGetValue(type, out var service))
             {
