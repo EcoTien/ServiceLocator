@@ -6,7 +6,7 @@ namespace EcoMine.Service.Disposable
     /// Disposable base class.
     /// Create a class that inherits from this class to implement IDisposable.
     /// </summary>
-    internal abstract class DisposableBase : IDisposable
+    public abstract class DisposableBase : IDisposable
     {
         /// <summary>
         /// Dispose flag.
