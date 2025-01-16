@@ -17,6 +17,7 @@ namespace EcoMine.Service
             else
             {
                 _isRegister = true;
+                transform.SetParent(null);
                 DontDestroyOnLoad(this);
                 ServiceLocator.RegisterGlobalService(this, this as T);
             }
