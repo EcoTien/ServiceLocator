@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace EcoMine.Service.Editor
 {
-    [InitializeOnLoad]
+    /*[InitializeOnLoad]*/
     internal sealed class ServiceLocatorEditor
     {
         private static string currentScenePath;
