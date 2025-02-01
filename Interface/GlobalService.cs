@@ -1,4 +1,4 @@
-﻿using System;
+﻿using EcoMine.Service;
 using UnityEngine;
 
 namespace EcoMine.Service
@@ -7,10 +7,10 @@ namespace EcoMine.Service
     {
         private bool _isRegister;
         
-        void IService.RegisterService()
+        public void RegisterService()
         {
             if(_isRegister) return;
-            if (ServiceLocator.IsRegistered<T>(this))
+            if (ServiceLocator.IsRegistered<T>())
             {
                 Destroy(this);
             }
@@ -19,7 +19,7 @@ namespace EcoMine.Service
                 _isRegister = true;
                 transform.SetParent(null);
                 DontDestroyOnLoad(this);
-                ServiceLocator.RegisterGlobalService(this, this as T);
+               ServiceLocator.RegisterGlobalService(this as T);
             }
         }
     }

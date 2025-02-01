@@ -1,13 +1,13 @@
-﻿using System;
+﻿using EcoMine.Service;
 using UnityEngine;
 
 namespace EcoMine.Service
 {
     public abstract class LocalService<T> : MonoBehaviour, IService where T : class, IService
     {
-        void IService.RegisterService()
+        public void RegisterService()
         {
-            ServiceLocator.RegisterLocalService(this, this as T);
+            ServiceLocator.RegisterLocalService(this as T);
         }
     }
 }

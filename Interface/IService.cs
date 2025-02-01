@@ -7,6 +7,6 @@ namespace EcoMine.Service
         /// <summary>
         /// Register service to service locator.
         /// </summary>
-        void RegisterService();
+        public void RegisterService();
     }
 }
